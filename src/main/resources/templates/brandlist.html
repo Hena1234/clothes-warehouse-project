@@ -11,53 +11,68 @@
             crossorigin="anonymous"
     />
     <title>Brands List</title>
+    <style>
+        body {
+            background-color: peachpuff;
+        }
+
+
+        .btn {
+            margin-top: 1rem;
+        }
+
+    </style>
 </head>
-<body style="background-color:peachpuff;">
-<div>
-    <table class="table table-striped">
-        <thead class="thead-dark">
-        <tr  class="table-info">
-            <th scope="col">product name</th>
-            <th scope="col">year of creation</th>
-            <th scope="col">Price</th>
-            <th scope="col">Brand rate</th>
-            <th scope="col">Brand </th>
+<body>
+<div class="d-flex flex-row mb-3">
+
+    <div>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr  class="table-info">
+                <th scope="col">product name</th>
+                <th scope="col">year of creation</th>
+                <th scope="col">Price</th>
+                <th scope="col">Brand rate</th>
+                <th scope="col">Brand </th>
 
 
 
-        </tr>
-        </thead>
-        <tbody>
-        <tr  class="table-warning" th:each="brand: ${brands}">
-            <td th:text="${brand.name}"></td>
-            <td th:text="${brand.getYearOfCreation}"></td>
-            <td th:text="${brand.getPrice}"></td>
-            <td th:text="${brand.rate}"></td>
-            <td th:text="${brand.getBrandNameFrom}"></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  class="table-warning" th:each="brand: ${brands}">
+                <td th:text="${brand.name}"></td>
+                <td th:text="${brand.getYearOfCreation}"></td>
+                <td th:text="${brand.getPrice}"></td>
+                <td th:text="${brand.rate}"></td>
+                <td th:text="${brand.getBrandNameFrom}"></td>
 
-        </tr>
+            </tr>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        </div>
 </div>
+
 <div
         class="d-flex flex-column bd-highlight justify-content-center align-items-center w-75 ms-5"
 >
     <form class="mt-3" method="post" th:object="${brandsByDateDto}">
         <div class="mb-3">
-            <label for="brandName" class="form-label"
-            >Brand name prefix:
+            <label for="BrandName" class="form-label"
+            >Fighter name prefix:
             </label>
-
+            <!--By using th:field we "bind" fighter model java fields to html input that we will provide-->
             <input
                     type="text"
                     class="form-control"
-                    id="brandName"
+                    id="BrandName"
                     th:field="*{name}"
-                    aria-describedby="brandHelp"
+                    aria-describedby="fighterHelp"
             />
             <div id="brandHelp" class="form-text">
-                Provide decent brand name
+                Provide decent fighter name prefix
             </div>
         </div>
         <div class="mb-3">
@@ -77,16 +92,26 @@
                     id="endDate"
                     th:field="*{endDate}"
                     name="endDate"
-                    value="2023-03-17"
+                    value="2023-02-17"
             />
         </div>
-        <div class="submit-btn">
-            <button class="btn btn-dark">
-                Search By product and Date
-            </button>
-        </div>
+        <button class="btn btn-primary mt-5">
+            Search By product and Date
+        </button>
     </form>
-
+    <ul class="pagination mt-5">
+        <li class="page-item">
+            <a class="page-link" th:href="@{/brandlist/switchPage(pageToSwitch=${currentPage - 1})}">Previous</a>
+        </li>
+        <li
+                class="page-item"
+                th:classappend="${currentPage + 1 eq page} ? 'active' : 'not'"
+                th:each="page: ${#numbers.sequence(1, totalPages)}"
+        >
+            <a class="page-link" th:text="${page}" th:href="@{/brandlist/switchPage(pageToSwitch=${page - 1})}" />
+        </li>
+        <li class="page-item"><a class="page-link" th:href="@{/brandlist/switchPage(pageToSwitch=${currentPage + 1})}">Next</a></li>
+    </ul>
     </nav>
 </div>
 </body>

@@ -1,6 +1,8 @@
 package com.example.clotheswarehouse.controller;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
-import java.util.EnumSet;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,12 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.clotheswarehouse.repository.BrandRepositoryPaginated;
 import com.example.clotheswarehouse.repository.BrandRepository;
 import com.example.clotheswarehouse.model.dto.BrandSearchByDateDto;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 
 @Controller
 @RequestMapping("/brandlist")
@@ -42,6 +44,7 @@ public class BrandListController {
 
     @ModelAttribute
     public void brandsByDateDto(Model model) {
+
         model.addAttribute("brandsByDateDto", new BrandSearchByDateDto());
     }
 
@@ -54,6 +57,22 @@ public class BrandListController {
                 LocalDate.parse( brandsByDateDto.getEndDate(), dateFormatter)));
         return "brandlist";
     }
+
+    @GetMapping("/switchPage")
+    public String switchPage(Model model,
+                             @RequestParam("pageToSwitch") Optional<Integer> pageToSwitch) {
+        var page = pageToSwitch.orElse(0);
+        var totalPages = (int) model.getAttribute("totalPages");
+        if (page < 0 || page >= totalPages) {
+            return "fighterlist";
+        }
+        var fighterPage = brandRepositoryPaginated.findAll(PageRequest.of(pageToSwitch.orElse(0),
+                PAGE_SIZE));
+        model.addAttribute("fighters", fighterPage.getContent());
+        model.addAttribute("currentPage", fighterPage.getNumber());
+        return "fighterlist";
+    }
+
 
 
 }

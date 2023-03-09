@@ -19,6 +19,7 @@
     <h1 class="mb-3">Clothes Warehouse</h1>
     <!-- We bind @ModelAttribute called brand to this HTML form-->
     <form method="post" th:object="${brand}">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
         <div th:if="${#fields.hasErrors()}">
             <span> Please correct the problems below and resubmit. </span>
         </div>
@@ -102,13 +103,20 @@
                 aria-label="Anime selection"
         >
             <option
-                    th:each="brands: ${brandnames}"
-                    th:value="${brands}"
-                    th:text="${brands.title}"
+                    th:each="brandName: ${brandnames}"
+                    th:value="${brandName}"
+                    th:text="${brandName.title}"
             />
         </select>
 
-        <button  class="btn btn-dark">Brand List</button>
+        <button  class="btn btn-dark">Create Brand List</button>
+    </form>
+    <form method="post" th:action="@{/design/deleteAllBrands}">
+        <button
+                class="btn btn-danger mt-5"
+        >
+            Delete All Brands
+        </button>
     </form>
 </div>
 </body>
