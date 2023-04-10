@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<style>
+    body {
+        background-color: peachpuff;
+    }
+
+
+
+</style>
+<body>
+<div class="container mt-5">
+    <h1>User Dashboard</h1>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="distribution : ${distributions}">
+            <td th:text="${distribution.id}"></td>
+            <td th:text="${distribution.name}"></td>
+            <td th:text="${distribution.latitude}"></td>
+            <td th:text="${distribution.longitude}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
