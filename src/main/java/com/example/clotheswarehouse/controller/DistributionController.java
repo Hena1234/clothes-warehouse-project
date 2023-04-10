@@ -1,17 +1,22 @@
 package com.example.clotheswarehouse.controller;
+
 import java.util.Arrays;
 import java.util.List;
 
+import com.example.clotheswarehouse.model.dto.ItemDto;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+
+
 import com.example.clotheswarehouse.model.dto.DistributionCentreDto;
 
 @Controller
-@RequestMapping("/distribution")
+@RequestMapping("/distributions")
 @CrossOrigin(origins = "http://localhost:8082")
 public class DistributionController {
     private RestTemplate restTemplate;
@@ -22,12 +27,20 @@ public class DistributionController {
 
     @GetMapping
     public String dashboard() {
-        return "distribution";
+        return "distributions";
     }
 
     @ModelAttribute("distributions")
-    public List<DistributionCentreDto> getDistributionCentres() {
-        var distributions = restTemplate.getForObject("http://localhost:8082/api/distributioncentre", DistributionCentreDto[].class);
+    public List<DistributionCentreDto> processGetDcs(@RequestParam(value="name", defaultValue="") String name,
+                                                     @RequestParam(value="brand") ItemDto.Brand brand) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBasicAuth("user", "cpan228");
+
+        HttpEntity<String> request = new HttpEntity<>("", headers);
+        var url = "http://localhost:8082/api/items/DC/" + name + "/" + brand;
+
+        var distributions = restTemplate.exchange(url, HttpMethod.GET, request, DistributionCentreDto[].class).getBody();
         return Arrays.asList(distributions);
     }
 }

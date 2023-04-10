@@ -51,7 +51,12 @@
       background-color: #F8F9FA ;
       color: #212529 ;
     }
-
+    .btn-light.d-flex.flex-row {
+      flex-direction: row;
+    }
+    .btn-light {
+      margin-right: 10px;
+    }
   </style>
 </head>
 <body>
@@ -59,10 +64,12 @@
   <a href="register" class="btn btn-custom">Login/Register</a>
   <img src="https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Clothes Warehouse logo" class="logo">
   <h1>CLOTHES WARE HOUSE</h1>
-  <a href="design" class="btn btn-light">Design your own clothes</a>
-  <a href="brandlist" class="btn btn-light">View our brands</a>
-  <a href="distribution" class="btn btn-light">Store </a>
-  <a href="item" class="btn btn-light">Item</a>
+  <div class="d-flex">
+    <a href="design" class="btn btn-light">Create Clothes</a>
+    <a href="brandlist" class="btn btn-light">View our Clothes and brands</a>
+    <a href="distributions" class="btn btn-light">Store </a>
+    <a href="item" class="btn btn-light">Item</a>
+  </div>
 </div>
 </body>
 </html>

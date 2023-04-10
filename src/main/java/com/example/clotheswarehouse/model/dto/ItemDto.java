@@ -18,7 +18,7 @@ public class ItemDto {
     private String name;
 
 
-    private String brandName;
+    private Brand brandName;
 
 
     private int yearItem;
@@ -31,5 +31,20 @@ public class ItemDto {
 
 
     private Long distributionCentreId;
+    public enum Brand {
+
+        BALENCIAGA("Balenciaga"), CHANEL("Chanel"), DIOR("Dior"), GUCCI("Gucci"), PRADA("Prada");
+
+        private String name;
+
+        private Brand(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
 
 }
