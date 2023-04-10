@@ -32,7 +32,7 @@ public class DistributionController {
 
     @ModelAttribute("distributions")
     public List<DistributionCentreDto> processGetDcs(@RequestParam(value="name", defaultValue="") String name,
-                                                     @RequestParam(value="brand") ItemDto.Brand brand) {
+                                                     @RequestParam(value="brandNameFrom") ItemDto.Brand brand) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth("user", "cpan228");

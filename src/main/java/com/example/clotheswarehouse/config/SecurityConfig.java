@@ -38,7 +38,7 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests()
                 .requestMatchers(toH2Console()).permitAll()
-                .requestMatchers("/design", "/brandlist")
+                .requestMatchers("/design", "/item")
                 .hasAnyRole("USER")
                 .anyRequest().permitAll()
                 .and()

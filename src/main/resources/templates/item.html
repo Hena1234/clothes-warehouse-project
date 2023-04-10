@@ -16,30 +16,31 @@
 </head>
 <body>
 <h1>Item Dashboard</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Item Name</th>
-        <th>Brand</th>
-        <th>Distribution Centre</th>
-        <th>Quantity</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="item : ${items}">
-        <td th:text="${item.name}"></td>
-        <td th:text="${item.brandName}"></td>
-        <td th:text="${item.yearItem}"></td>
-        <td th:text="${item.price}"></td>
-        <td th:text="${item.quantity}"></td>
-        <td>
-            <form method="post" th:action="@{'/items/delete/' + ${item.id} + '/' + ${item.distributionCentreId}}">
-                <input type="submit" value="Delete">
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<form method="get" th:object="${brand}" th:action="@{/distributions}">
+<div class="mb-3">
+    <label for="brandName" class="form-label">Product name: </label>
+    <!--By using th:field we "bind" brand model java fields to html input that we will provide-->
+    <input
+            type="text"
+            class="form-control"
+            id="brandName"
+            th:field="*{name}"
+            aria-describedby="brandHelp"
+    />
+    <select
+            th:field="*{brandNameFrom}"
+            class="form-select mt-5 mb-5"
+            aria-label="Anime selection"
+    >
+        <option
+                th:each="brandName: ${brandnames}"
+                th:value="${brandName}"
+                th:text="${brandName.title}"
+        />
+    </select>
+
+    <button  class="btn btn-dark">List Distribution centre</button>
+    </form>
+</div>
 </body>
 </html>
