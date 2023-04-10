@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Item Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <style>
+        body {
+            background-color: peachpuff;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+<h1>Item Dashboard</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Item Name</th>
+        <th>Brand</th>
+        <th>Distribution Centre</th>
+        <th>Quantity</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${items}">
+        <td th:text="${item.name}"></td>
+        <td th:text="${item.brandName}"></td>
+        <td th:text="${item.yearItem}"></td>
+        <td th:text="${item.price}"></td>
+        <td th:text="${item.quantity}"></td>
+        <td>
+            <form method="post" th:action="@{'/items/delete/' + ${item.id} + '/' + ${item.distributionCentreId}}">
+                <input type="submit" value="Delete">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
