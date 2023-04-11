@@ -15,27 +15,38 @@
         body {
             background-color: peachpuff;
         }
-
-
-        .btn {
-            margin-top: 1rem;
+        .mx-auto{
+            margin-top: 10em;
         }
+
+        button{
+            background-color: white;
+            color: black;
+            border: 0.5px solid black;
+        }
+
+        button:hover {
+            background-color: ivory; /* Green */
+            color: gray;
+        }
+
 
     </style>
 </head>
 <body>
-<div class="d-flex flex-row mb-3">
 
-    <div>
-        <table class="table table-striped">
+
+    <div class="d-flex flex-row mb-3 justify-content-center">
+        <div class="mx-auto">
+            <table class="table table-bordered">
             <thead class="thead-dark">
-            <tr  class="table-info">
+            <tr class="table-danger">
                 <th scope="col">product name</th>
                 <th scope="col">year of creation</th>
                 <th scope="col">Price</th>
                 <th scope="col">Brand rate</th>
                 <th scope="col">Brand </th>
-
+                <th scope="col"> </th>
 
 
             </tr>
@@ -47,58 +58,25 @@
                 <td th:text="${brand.getPrice}"></td>
                 <td th:text="${brand.rate}"></td>
                 <td th:text="${brand.getBrandNameFrom}"></td>
-
+                <td>
+                    <form th:action="@{/distributions}" th:object="${brand}" method="get">
+                        <input type="hidden" th:name="name" th:value="${brand.name}"/>
+                        <input type="hidden" th:name="brandNameFrom" th:value="${brand.getBrandNameFrom}"/>
+                        <button type="submit">List distribution centre</button>
+                        </form>
+                </td>
             </tr>
 
             </tbody>
         </table>
+
         </div>
 </div>
 
 <div
-        class="d-flex flex-column bd-highlight justify-content-center align-items-center w-75 ms-5"
+        class="d-flex justify-content-center align-items-center mt-5"
 >
-    <form class="mt-3" method="post" th:object="${brandsByDateDto}">
-        <div class="mb-3">
-            <label for="BrandName" class="form-label"
-            >Fighter name prefix:
-            </label>
-            <!--By using th:field we "bind" fighter model java fields to html input that we will provide-->
-            <input
-                    type="text"
-                    class="form-control"
-                    id="BrandName"
-                    th:field="*{name}"
-                    aria-describedby="fighterHelp"
-            />
-            <div id="brandHelp" class="form-text">
-                Provide decent fighter name prefix
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="startDate" class="form-label">Start Date: </label>
-            <input
-                    type="date"
-                    id="startDate"
-                    th:field="*{startDate}"
-                    name="startDate"
-                    value="2023-02-17"
-            />
-        </div>
-        <div class="mb-3">
-            <label for="endDate" class="form-label">End Date: </label>
-            <input
-                    type="date"
-                    id="endDate"
-                    th:field="*{endDate}"
-                    name="endDate"
-                    value="2023-02-17"
-            />
-        </div>
-        <button class="btn btn-primary mt-5">
-            Search By product and Date
-        </button>
-    </form>
+
     <ul class="pagination mt-5">
         <li class="page-item">
             <a class="page-link" th:href="@{/brandlist/switchPage(pageToSwitch=${currentPage - 1})}">Previous</a>
